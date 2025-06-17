@@ -2,16 +2,12 @@ from server.app import db
 
 class RestaurantPizza(db.Model):
     __tablename__ = 'restaurant_pizzas'
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'))
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
 
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
-    pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'), nullable=False)
-
-    restaurant = db.relationship('Restaurant', back_populates='restaurant_pizzas')
-    pizza = db.relationship('Pizza', back_populates='restaurant_pizzas')
-
-    __table_args__ = (
-        db.CheckConstraint('price >= 1 AND price <= 30', name='check_price_between_1_and_30'),
-    )
+    pizza = db.relationship('server.models.pizza.Pizza', back_populates='restaurant_pizzas')
+    restaurant = db.relationship('server.models.restaurant.Restaurant', back_populates='restaurant_pizzas')
