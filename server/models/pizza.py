@@ -1,15 +1,13 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
-from server.models import Base
+from server.app import db
 
-class Pizza(Base):
+class Pizza(db.Model):
     __tablename__ = 'pizzas'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    ingredients = Column(String)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    ingredients = db.Column(db.String)
 
-    restaurant_pizzas = relationship(
+    restaurant_pizzas = db.relationship(
         'RestaurantPizza',
         back_populates='pizza',
         cascade='all, delete-orphan'

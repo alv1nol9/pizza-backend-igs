@@ -1,19 +1,17 @@
-from sqlalchemy import Column, Integer, ForeignKey, CheckConstraint
-from sqlalchemy.orm import relationship
-from server.models import Base
+from server.app import db
 
-class RestaurantPizza(Base):
+class RestaurantPizza(db.Model):
     __tablename__ = 'restaurant_pizzas'
 
-    id = Column(Integer, primary_key=True)
-    price = Column(Integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    price = db.Column(db.Integer, nullable=False)
 
-    restaurant_id = Column(Integer, ForeignKey('restaurants.id'), nullable=False)
-    pizza_id = Column(Integer, ForeignKey('pizzas.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'), nullable=False)
 
-    restaurant = relationship('Restaurant', back_populates='restaurant_pizzas')
-    pizza = relationship('Pizza', back_populates='restaurant_pizzas')
+    restaurant = db.relationship('Restaurant', back_populates='restaurant_pizzas')
+    pizza = db.relationship('Pizza', back_populates='restaurant_pizzas')
 
     __table_args__ = (
-        CheckConstraint('price >= 1 AND price <= 30', name="check_price_between_1_and_30"),
+        db.CheckConstraint('price >= 1 AND price <= 30', name='check_price_between_1_and_30'),
     )
