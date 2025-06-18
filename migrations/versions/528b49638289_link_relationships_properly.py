@@ -1,8 +1,8 @@
-"""clean
+"""link relationships properly
 
-Revision ID: 1d026b696a07
+Revision ID: 528b49638289
 Revises: 
-Create Date: 2025-06-17 20:45:21.696048
+Create Date: 2025-06-17 21:27:12.226657
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1d026b696a07'
+revision = '528b49638289'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,10 +32,9 @@ def upgrade():
     )
     op.create_table('restaurant_pizzas',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('price', sa.Integer(), nullable=False),
-    sa.Column('restaurant_id', sa.Integer(), nullable=False),
+    sa.Column('price', sa.Float(), nullable=False),
     sa.Column('pizza_id', sa.Integer(), nullable=False),
-    sa.CheckConstraint('price >= 1 AND price <= 30', name='check_price_between_1_and_30'),
+    sa.Column('restaurant_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['pizza_id'], ['pizzas.id'], ),
     sa.ForeignKeyConstraint(['restaurant_id'], ['restaurants.id'], ),
     sa.PrimaryKeyConstraint('id')

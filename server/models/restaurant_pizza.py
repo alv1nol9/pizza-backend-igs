@@ -6,8 +6,17 @@ class RestaurantPizza(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     price = db.Column(db.Float, nullable=False)
-    pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'))
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
 
-    pizza = db.relationship('server.models.pizza.Pizza', back_populates='restaurant_pizzas')
-    restaurant = db.relationship('server.models.restaurant.Restaurant', back_populates='restaurant_pizzas')
+    pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+
+    pizza = db.relationship(
+        'server.models.pizza.Pizza',
+        back_populates='restaurant_pizzas'
+    )
+
+    restaurant = db.relationship(
+        'server.models.restaurant.Restaurant',
+        back_populates='restaurant_pizzas'
+    )
+
