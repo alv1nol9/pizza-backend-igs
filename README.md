@@ -73,6 +73,17 @@ Returns all restaurants
 
 Returns one restaurant with pizzas offered
 
+### POST /restaurants
+
+Creates a new restaurant
+
+```json
+{
+  "name": "Za Town",
+  "address": "101 Crust Ln"
+}
+```
+
 ### DELETE /restaurants/\:id
 
 Deletes a restaurant and all associated RestaurantPizzas
@@ -102,6 +113,10 @@ Creates a new restaurant pizza (price entry)
 
 * `price` must be between 1 and 30 (inclusive)
 * `pizza_id` and `restaurant_id` must reference valid models
+
+### Restaurant
+
+* `name` and `address` are required
 
 ##  Testing with Thunder Client or Postman
 
@@ -135,7 +150,6 @@ Creates a new restaurant pizza (price entry)
 }
 ```
 
----
 
 ## Error Response Example
 
@@ -147,4 +161,11 @@ Creates a new restaurant pizza (price entry)
 }
 ```
 
----
+### POST /restaurants with missing fields
+
+```json
+{
+  "errors": ["Name and address are required"]
+}
+```
+
